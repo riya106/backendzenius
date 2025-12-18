@@ -11,8 +11,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",              // local frontend
-      "https://zenius.vercel.app"            // deployed frontend (change if needed)
+      "http://localhost:5173",     // local frontend
+      "https://zenius.vercel.app"  // deployed frontend
     ],
     credentials: true,
   })
@@ -41,22 +41,12 @@ app.get("/", (req, res) => {
 /* =======================
    ROUTES
 ======================= */
-const internshipRoutes = require("./routes/internshipRoutes");
-app.use("/api/internships", internshipRoutes);
-
-const summitRoutes = require("./routes/summitRoutes");
-app.use("/api/summits", summitRoutes);
-
-const hackathonRoutes = require("./routes/hackathonRoutes");
-app.use("/api/hackathons", hackathonRoutes);
-
-const dsaRoutes = require("./routes/dsaRoutes");
-app.use("/api/dsa", dsaRoutes);
+app.use("/api/internships", require("./routes/internshipRoutes"));
+app.use("/api/summits", require("./routes/summitRoutes"));
+app.use("/api/hackathons", require("./routes/hackathonRoutes"));
+app.use("/api/dsa", require("./routes/dsaRoutes"));
 
 /* =======================
-   SERVER
+   EXPORT APP (VERCEL)
 ======================= */
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+module.exports = app;
